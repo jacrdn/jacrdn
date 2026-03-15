@@ -1,0 +1,43 @@
+.main {
+  width: 100%;
+  overflow-x: hidden;
+}
+
+.sectionTitle {
+  font-size: clamp(2.5rem, 6vw, 5rem);
+  margin-bottom: 2rem;
+  line-height: 1;
+}
+
+.bodyText {
+  font-size: 1rem;
+  font-weight: 300;
+  max-width: 60ch;
+  line-height: 1.8;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 1.5rem;
+  margin-top: 1rem;
+}
+
+.card {
+  aspect-ratio: 4 / 3;
+  border: 1.5px solid var(--fg);
+  display: flex;
+  align-items: flex-end;
+  padding: 1rem;
+  font-size: 0.875rem;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: background 0.2s var(--ease-fluid);
+}
+
+.card:hover {
+  background: var(--fg);
+  color: var(--bg);
+}

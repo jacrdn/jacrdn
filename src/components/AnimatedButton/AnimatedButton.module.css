@@ -1,0 +1,51 @@
+.btn {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.75rem 2rem;
+  font-family: var(--font-body);
+  font-size: 0.875rem;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  cursor: pointer;
+  overflow: hidden;
+  border: none;
+  background: transparent;
+  color: var(--fg);
+  text-decoration: none;
+  will-change: transform;
+}
+
+/* Outline variant */
+.outline {
+  border: 1.5px solid var(--fg);
+}
+
+/* Fill sweep layer — GSAP animates scaleX on this */
+.fill {
+  position: absolute;
+  inset: 0;
+  background: var(--fg);
+  transform: scaleX(0);
+  z-index: 0;
+  pointer-events: none;
+}
+
+/* Label sits above the fill */
+.label {
+  position: relative;
+  z-index: 1;
+  color: var(--fg);
+  transition: color 0.25s var(--ease-fluid);
+}
+
+/* On hover, label flips to background color so it reads against the red fill */
+.btn:hover .label {
+  color: var(--bg);
+}
+
+.pressed {
+  transform: scale(0.95);
+}

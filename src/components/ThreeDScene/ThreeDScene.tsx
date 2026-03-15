@@ -1,179 +1,99 @@
 "use client";
 
 import { useEffect, useRef } from "react";
-import * as THREE from "three";
-import { crtVertex, crtFragment } from "./shaders";
 import styles from "./ThreeDScene.module.css";
 
-const RING_COLOR = new THREE.Color(0x624b5b);
-const RING_COUNT = 12;
+const RING_COUNT = 60;
 const GOLDEN     = 0.6180339887;
 
 export default function ThreeDScene() {
-  const mountRef = useRef<HTMLDivElement>(null);
+  const canvasRef = useRef<HTMLCanvasElement>(null);
 
   useEffect(() => {
-    const mount = mountRef.current;
-    if (!mount) return;
+    const canvas = canvasRef.current;
+    if (!canvas) return;
 
-    const W = mount.clientWidth;
-    const H = mount.clientHeight;
+    const ctx = canvas.getContext("2d");
+    if (!ctx) return;
 
-    // ── Renderer ─────────────────────────────────────────────────────
-    const renderer = new THREE.WebGLRenderer({ antialias: false, alpha: true });
-    renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
-    renderer.setSize(W, H);
-    renderer.setClearColor(0x000000, 0); // transparent — page peach shows through
-    mount.appendChild(renderer.domElement);
+    // Per-ring parameters (same variation logic as before)
+    const rings = Array.from({ length: RING_COUNT }, (_, i) => {
+      const base  = 0.06 + Math.abs(Math.sin(i * 1.17)) * 0.09;
+      const dirY  = Math.sin(i * 2.40) > 0 ? 1 : -1;
+      const dirZ  = Math.cos(i * 1.91) > 0 ? 1 : -1;
+      return {
+        radius:  1.0 + Math.sin(i * 1.3) * 0.18,
+        phi0:    (i / RING_COUNT) * Math.PI,
+        tilt0:   (i / RING_COUNT) * Math.PI,
+        phaseX:  i * GOLDEN,
+        pulsePhase: i * GOLDEN * 2.3,
+        speedY:  dirY * base * (0.5 + Math.abs(Math.cos(i * 0.83)) * 0.8),
+        speedZ:  dirZ * base * (0.3 + Math.abs(Math.sin(i * 1.44)) * 0.5),
+      };
+    });
 
-    // ── Pass 1: 3D band scene ────────────────────────────────────────
-    const scene  = new THREE.Scene();
-    const camera = new THREE.PerspectiveCamera(60, W / H, 0.1, 100);
-    camera.position.z = 3;
+    // DPR-aware sizing
+    let W = 0, H = 0, cx = 0, cy = 0, baseR = 0;
 
-    // Build orbital rings — TorusGeometry so center is empty, no nucleus glow
-    const rings: THREE.Mesh[] = [];
-    const ringInit:  { x: number; y: number; z: number }[] = [];
-    const ringSpeed: { y: number; z: number }[] = [];
-
-    for (let i = 0; i < RING_COUNT; i++) {
-      // Vary radius and tube slightly per ring for depth layering
-      const radius = 1.1 + Math.sin(i * 1.3) * 0.2;
-      const tube   = 0.045 + Math.abs(Math.sin(i * 2.1)) * 0.02;
-      const geo    = new THREE.TorusGeometry(radius, tube, 8, 100);
-
-      const mat = new THREE.MeshBasicMaterial({
-        color:       RING_COLOR,
-        transparent: true,
-        opacity:     0.80,
-        blending:    THREE.AdditiveBlending,
-        depthWrite:  false,
-      });
-
-      const mesh = new THREE.Mesh(geo, mat);
-
-      // Spread orbital inclinations evenly — rings at truly different 3D angles
-      const initX = (i / RING_COUNT) * Math.PI;
-      const initY = i * GOLDEN * Math.PI * 0.5;
-      const initZ = i * GOLDEN * Math.PI * 0.3;
-      mesh.rotation.x = initX;
-      mesh.rotation.y = initY;
-      mesh.rotation.z = initZ;
-      ringInit.push({ x: initX, y: initY, z: initZ });
-
-      // Per-ring speed: varied magnitude AND direction — some go opposite ways
-      const base = 0.06 + Math.abs(Math.sin(i * 1.17)) * 0.09; // 0.06–0.15
-      const dirY = Math.sin(i * 2.40) > 0 ? 1 : -1;
-      const dirZ = Math.cos(i * 1.91) > 0 ? 1 : -1;
-      ringSpeed.push({
-        y: dirY * base * (0.5 + Math.abs(Math.cos(i * 0.83)) * 0.8),
-        z: dirZ * base * (0.3 + Math.abs(Math.sin(i * 1.44)) * 0.5),
-      });
-
-      rings.push(mesh);
-      scene.add(mesh);
+    function resize() {
+      const dpr = window.devicePixelRatio || 1;
+      W = canvas!.offsetWidth;
+      H = canvas!.offsetHeight;
+      canvas!.width  = W * dpr;
+      canvas!.height = H * dpr;
+      ctx!.setTransform(dpr, 0, 0, dpr, 0, 0);
+      cx    = W / 2;
+      cy    = H / 2;
+      baseR = Math.min(W, H) * 0.38;
     }
+    resize();
 
-    // ── Render target for pass 1 output ─────────────────────────────
-    const rt = new THREE.WebGLRenderTarget(W, H, {
-      minFilter: THREE.LinearFilter,
-      magFilter: THREE.LinearFilter,
-    });
-
-    // ── Pass 2: CRT post-process quad ───────────────────────────────
-    const postScene  = new THREE.Scene();
-    const postCamera = new THREE.OrthographicCamera(-1, 1, 1, -1, 0, 1);
-    const postGeo    = new THREE.PlaneGeometry(2, 2);
-    const postMat    = new THREE.ShaderMaterial({
-      vertexShader:   crtVertex,
-      fragmentShader: crtFragment,
-      uniforms: {
-        uTexture:    { value: rt.texture },
-        uTime:       { value: 0 },
-        uResolution: { value: new THREE.Vector2(W, H) },
-      },
-      transparent: true,
-    });
-    postScene.add(new THREE.Mesh(postGeo, postMat));
-
-    // ── Animation loop ───────────────────────────────────────────────
-    const clock = new THREE.Clock();
-    let animId:   number;
+    let animId: number;
     let isVisible = true;
+    const t0 = performance.now();
 
-    function animate() {
+    function draw() {
       if (!isVisible) return;
-      animId = requestAnimationFrame(animate);
+      animId = requestAnimationFrame(draw);
 
-      const t = clock.getElapsedTime();
+      const t = (performance.now() - t0) / 1000; // seconds
 
-      rings.forEach((ring, i) => {
-        const phase = i * GOLDEN;
+      ctx!.clearRect(0, 0, W, H);
+      ctx!.strokeStyle = "#ea032e";
+      ctx!.lineWidth   = 1.5;
 
-        // Each ring precesses on its own Y+Z axes at its own speed and direction
-        ring.rotation.y = ringInit[i].y + t * ringSpeed[i].y;
-        ring.rotation.z = ringInit[i].z + t * ringSpeed[i].z;
+      for (const ring of rings) {
+        const pulse = 1 + 0.08 * Math.sin(t * 0.6 + ring.pulsePhase);
+        const a    = baseR * ring.radius * pulse;
+        const phi  = ring.phi0  + t * ring.speedY;
+        const tilt = ring.tilt0 + Math.sin(t * 0.25 + ring.phaseX) * 0.5 + t * ring.speedZ;
+        const b    = a * Math.abs(Math.cos(tilt));
 
-        // Slow inclination wobble for 3D depth variation
-        ring.rotation.x = ringInit[i].x + Math.sin(t * 0.25 + phase) * 0.25;
-
-        // Opacity breathes gently at lower base
-        (ring.material as THREE.MeshBasicMaterial).opacity =
-          0.80 + Math.sin(i * 0.73 + t * 0.22) * 0.10;
-      });
-
-      // Pass 1 → render target
-      renderer.setRenderTarget(rt);
-      renderer.render(scene, camera);
-
-      // Pass 2 → screen
-      postMat.uniforms.uTime.value = t;
-      renderer.setRenderTarget(null);
-      renderer.render(postScene, postCamera);
+        ctx!.beginPath();
+        ctx!.ellipse(cx, cy, a, b, phi, 0, Math.PI * 2);
+        ctx!.stroke();
+      }
     }
-    animate();
+    draw();
 
-    // ── Pause off-screen ─────────────────────────────────────────────
+    // Pause off-screen
     const observer = new IntersectionObserver(
       ([entry]) => {
         isVisible = entry.isIntersecting;
-        if (isVisible) animate();
+        if (isVisible) draw();
       },
       { threshold: 0.1 }
     );
-    observer.observe(mount);
+    observer.observe(canvas);
 
-    // ── Resize ───────────────────────────────────────────────────────
-    function onResize() {
-      if (!mount) return;
-      const w = mount.clientWidth;
-      const h = mount.clientHeight;
-      renderer.setSize(w, h);
-      camera.aspect = w / h;
-      camera.updateProjectionMatrix();
-      rt.setSize(w, h);
-      postMat.uniforms.uResolution.value.set(w, h);
-    }
-    window.addEventListener("resize", onResize);
+    window.addEventListener("resize", resize);
 
-    // ── Cleanup ──────────────────────────────────────────────────────
     return () => {
       cancelAnimationFrame(animId);
       observer.disconnect();
-      window.removeEventListener("resize", onResize);
-      rings.forEach((r) => {
-        r.geometry.dispose();
-        (r.material as THREE.Material).dispose();
-      });
-      postGeo.dispose();
-      postMat.dispose();
-      rt.dispose();
-      renderer.dispose();
-      if (mount.contains(renderer.domElement)) {
-        mount.removeChild(renderer.domElement);
-      }
+      window.removeEventListener("resize", resize);
     };
   }, []);
 
-  return <div ref={mountRef} className={styles.canvas} />;
+  return <canvas ref={canvasRef} className={styles.canvas} />;
 }

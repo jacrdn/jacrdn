@@ -68,6 +68,16 @@
   justify-content: center;
 }
 
+@media (max-width: 768px) {
+  .hero {
+    height: 100dvh;
+  }
+
+  .three {
+    height: 40dvh;
+  }
+}
+
 @media (max-width: 900px) {
   .inner {
     flex-direction: column;

@@ -9,7 +9,7 @@ import styles from "./page.module.css";
 export default function Home() {
   return (
     <main className={styles.main}>
-      <div style={{ position: "fixed", top: "1.5rem", left: "1.5rem", zIndex: 100, display: "flex", alignItems: "flex-end", gap: "2rem" }}>
+      <div className={styles.header}>
         <HeaderWord />
         <Nav />
       </div>

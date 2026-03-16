@@ -8,6 +8,16 @@
   scrollbar-color: var(--fg) var(--bg);
 }
 
+.header {
+  position: fixed;
+  top: 1.5rem;
+  left: 1.5rem;
+  z-index: 100;
+  display: flex;
+  align-items: flex-end;
+  gap: 2rem;
+}
+
 .main::-webkit-scrollbar {
   width: 4px;
 }
@@ -81,11 +91,27 @@
 }
 
 @media (max-width: 768px) {
+  .main {
+    height: 100dvh;
+    scroll-snap-type: none;
+  }
+
+  .header {
+    top: 1rem;
+    left: 1rem;
+    gap: 1.25rem;
+  }
+
   .aboutLayout {
     grid-template-columns: 1fr;
+    gap: 1.5rem;
   }
+
   .aboutImage {
-    max-height: 400px;
+    max-height: 280px;
+    width: auto;
+    margin: 0 auto;
+    display: block;
   }
 }
 

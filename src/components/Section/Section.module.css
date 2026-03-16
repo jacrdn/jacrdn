@@ -4,3 +4,9 @@
   margin: 0 auto;
   width: 100%;
 }
+
+@media (max-width: 768px) {
+  .section {
+    padding: 4rem 1.25rem 3rem;
+  }
+}

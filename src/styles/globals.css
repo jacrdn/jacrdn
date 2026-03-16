@@ -94,6 +94,18 @@ a {
   scroll-snap-align: start;
 }
 
+@media (max-width: 768px) {
+  .section {
+    height: 100dvh;
+  }
+
+  #about.section,
+  #work.section {
+    height: auto;
+    min-height: 100dvh;
+  }
+}
+
 /* ─── GSAP visibility defaults ────────────────────────────────── */
 .gsap-hidden {
   opacity: 0;

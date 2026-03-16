@@ -31,7 +31,7 @@
   font-size: clamp(4rem, 10vw, 9rem);
   line-height: 1.1;
   letter-spacing: -0.02em;
-  padding-top: 0.35em; /* Ballet swashes clip at the top without this */
+  padding-top: 0.5em; /* Ballet swashes clip at the top without this */
   overflow: visible;
 }
 
@@ -71,6 +71,7 @@
 @media (max-width: 768px) {
   .hero {
     height: 100dvh;
+    align-items: flex-start;
   }
 
   .three {
@@ -96,6 +97,8 @@
   }
 
   .body {
-    margin: 0 auto;
+    width: 100%;
+    max-width: 100%;
+    margin: 0;
   }
 }

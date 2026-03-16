@@ -60,7 +60,7 @@ export default function AnimatedText({
       words.forEach((word, wi) => {
         const wordSpan = document.createElement("span");
         wordSpan.style.display = needsBlock ? "inline-block" : "inline";
-        wordSpan.style.whiteSpace = "nowrap";
+        if (needsBlock) wordSpan.style.whiteSpace = "nowrap";
 
         word.split("").forEach((char) => {
           const span = document.createElement("span");
@@ -76,12 +76,10 @@ export default function AnimatedText({
 
         el.appendChild(wordSpan);
 
-        // Space between words (except after last)
+        // Space between words (except after last) — use a raw text node so
+        // white-space: nowrap on the word span doesn't suppress the break opportunity
         if (wi < words.length - 1) {
-          const space = document.createElement("span");
-          space.textContent = "\u00A0";
-          space.style.display = "inline";
-          el.appendChild(space);
+          el.appendChild(document.createTextNode(" "));
         }
       });
 

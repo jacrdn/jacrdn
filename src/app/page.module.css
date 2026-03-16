@@ -4,6 +4,8 @@
   height: 100vh;
   overflow-y: scroll;
   scroll-snap-type: y mandatory;
+  scrollbar-width: thin;
+  scrollbar-color: var(--fg) var(--bg);
 }
 
 .main::-webkit-scrollbar {

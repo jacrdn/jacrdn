@@ -2,11 +2,17 @@ import Image from "next/image";
 import Hero from "@/components/Hero/Hero";
 import Section from "@/components/Section/Section";
 import WorkCarousel from "@/components/WorkCarousel/WorkCarousel";
+import HeaderWord from "@/components/HeaderWord/HeaderWord";
+import Nav from "@/components/Nav/Nav";
 import styles from "./page.module.css";
 
 export default function Home() {
   return (
     <main className={styles.main}>
+      <div style={{ position: "fixed", top: "1.5rem", left: "1.5rem", zIndex: 100, display: "flex", alignItems: "flex-end", gap: "2rem" }}>
+        <HeaderWord />
+        <Nav />
+      </div>
       <Hero />
 
       <Section id="about" scrollAnimate>

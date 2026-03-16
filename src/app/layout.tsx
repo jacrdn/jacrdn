@@ -1,7 +1,5 @@
 import type { Metadata } from "next";
 import "@/styles/globals.css";
-import HeaderWord from "@/components/HeaderWord/HeaderWord";
-import Nav from "@/components/Nav/Nav";
 
 export const metadata: Metadata = {
   title: "9xbetter",
@@ -37,10 +35,6 @@ export default function RootLayout({
         />
       </head>
       <body>
-        <div style={{ position: "fixed", top: "1.5rem", left: "1.5rem", zIndex: 100, display: "flex", alignItems: "flex-end", gap: "2rem" }}>
-          <HeaderWord />
-          <Nav />
-        </div>
         {children}
       </body>
     </html>

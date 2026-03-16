@@ -31,6 +31,21 @@
   line-height: 1.8;
 }
 
+.likesList {
+  font-size: 1rem;
+  font-weight: 300;
+  line-height: 1.8;
+  max-width: 60ch;
+  padding-left: 1.2rem;
+  margin-top: 1.2rem;
+  list-style: disc;
+  color: var(--fg);
+}
+
+.likesList li {
+  padding-left: 0.3rem;
+}
+
 .link {
   color: var(--fg);
   text-decoration: underline;

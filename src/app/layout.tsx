@@ -2,9 +2,9 @@ import type { Metadata } from "next";
 import "@/styles/globals.css";
 
 export const metadata: Metadata = {
-  title: "9xbetter",
-  description: "Personal portfolio — 9xbetter.com",
-  metadataBase: new URL("https://9xbetter.com"),
+  title: "jacrdn",
+  description: "Personal portfolio — jacrdn.com",
+  metadataBase: new URL("https://jacrdn.com"),
   icons: {
     icon: "/favicon.svg",
   },

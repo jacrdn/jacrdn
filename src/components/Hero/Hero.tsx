@@ -41,7 +41,7 @@ export default function Hero() {
             />
           </div>
           <AnimatedText
-            text={"Intentional engineering for the agentic age. Physical necessities for those in need.\nSonic solutions for the end of all things."}
+            text={"Intentional engineering for the agentic age. Physical necessities for those in need. Security for what matters most."}
             as="p"
             mode="typewriter"
             delay={0.8}

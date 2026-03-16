@@ -1,0 +1,170 @@
+.outer {
+  position: relative;
+  width: 100%;
+}
+
+/* edge lines */
+.outer::before,
+.outer::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: 1.5px;
+  background: var(--fg);
+  z-index: 2;
+  pointer-events: none;
+}
+
+.outer::before { left: 0; }
+.outer::after  { right: 0; }
+
+.root {
+  width: 100%;
+  overflow-x: scroll;
+  overflow-y: visible;
+  scroll-snap-type: x mandatory;
+  -webkit-overflow-scrolling: touch;
+  cursor: grab;
+}
+
+.root:active {
+  cursor: grabbing;
+}
+
+/* hide scrollbar */
+.root::-webkit-scrollbar { display: none; }
+.root { -ms-overflow-style: none; scrollbar-width: none; }
+
+/* ── Track ─────────────────────────────────────────────────────── */
+.track {
+  display: flex;
+  gap: 1.5rem;
+}
+
+.spacer {
+  /* (half container) - (half card) — lets first/last card snap to center */
+  min-width: calc(min(50vw - 2rem, 600px) - clamp(150px, 19vw, 230px));
+  flex-shrink: 0;
+}
+
+/* ── Card ──────────────────────────────────────────────────────── */
+.card {
+  min-width: clamp(300px, 38vw, 460px);
+  flex-shrink: 0;
+  scroll-snap-align: center;
+  border: 1.5px solid var(--fg);
+  padding: 1.75rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+}
+
+/* ── Card Header ───────────────────────────────────────────────── */
+.cardHeader {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.index {
+  font-size: 0.7rem;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  opacity: 0.45;
+  flex-shrink: 0;
+}
+
+.rule {
+  flex: 1;
+  height: 1px;
+  background: var(--fg-muted);
+}
+
+/* ── Identity ──────────────────────────────────────────────────── */
+.identity {
+  display: flex;
+  flex-direction: column;
+  gap: 0.2rem;
+}
+
+.company {
+  font-size: clamp(1.4rem, 2.5vw, 2rem);
+  line-height: 1.1;
+  margin: 0;
+}
+
+.role {
+  font-size: 0.8rem;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  opacity: 0.7;
+  margin: 0;
+}
+
+.period {
+  font-size: 0.75rem;
+  opacity: 0.45;
+  margin: 0.25rem 0 0;
+}
+
+/* ── Responsibilities ──────────────────────────────────────────── */
+.responsibilities {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+  flex: 1;
+}
+
+.responsibilities li {
+  font-size: 0.8rem;
+  font-weight: 300;
+  line-height: 1.6;
+  padding-left: 1rem;
+  position: relative;
+}
+
+.responsibilities li::before {
+  content: "—";
+  position: absolute;
+  left: 0;
+  opacity: 0.45;
+}
+
+/* ── Bio ───────────────────────────────────────────────────────── */
+.bio {
+  font-size: 0.875rem;
+  line-height: 1.75;
+  font-weight: 300;
+  margin: 0;
+}
+
+/* ── Tags ──────────────────────────────────────────────────────── */
+.tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.tag {
+  font-size: 0.65rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  border: 1px solid var(--fg-muted);
+  padding: 0.25rem 0.6rem;
+  transition: background 0.15s, color 0.15s;
+}
+
+.tag:hover {
+  background: var(--fg);
+  color: var(--bg);
+  border-color: var(--fg);
+}

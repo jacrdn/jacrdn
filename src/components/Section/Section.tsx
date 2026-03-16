@@ -34,8 +34,11 @@ export default function Section({
 
     gsap.set(targets, { opacity: 0, y: 40 });
 
+    const scroller = document.querySelector("main") ?? window;
+
     const trigger = ScrollTrigger.create({
       trigger: el,
+      scroller,
       start: "top 75%",
       onEnter: () => {
         gsap.to(targets, {

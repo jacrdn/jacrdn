@@ -1,0 +1,22 @@
+.back {
+  position: fixed;
+  top: 1.5rem;
+  right: 1.5rem;
+  z-index: 100;
+  font-family: var(--font-body);
+  font-size: 0.8rem;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--fg);
+  text-decoration: none;
+  background: none;
+  padding: 0 0.3em;
+  transition: background 0.15s var(--ease-fluid), color 0.15s var(--ease-fluid);
+}
+
+.back:hover {
+  background: var(--fg);
+  color: var(--bg);
+  font-style: italic;
+}

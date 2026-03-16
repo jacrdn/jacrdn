@@ -8,7 +8,8 @@ import styles from "./AnimatedText.module.css";
 type AnimationMode =
   | "fadeUp"       // chars slide up on entrance
   | "glitch"       // stepped/jagged glitch reveal
-  | "typewriter";  // cursor-style character reveal
+  | "typewriter"   // cursor-style character reveal
+  | "scrambleIn";  // chars appear in random order
 
 interface AnimatedTextProps {
   text: string;
@@ -16,6 +17,13 @@ interface AnimatedTextProps {
   mode?: AnimationMode;
   delay?: number;
   className?: string;
+  /**
+   * Per-character letter-spacing overrides, keyed by index into the chars
+   * array (non-space characters only, in source order). Applied to the span
+   * at build time so kerning is present throughout the animation.
+   * Example: { 8: "-0.06em" } tightens the gap after the 9th non-space char.
+   */
+  charKerning?: Record<number, string>;
 }
 
 export default function AnimatedText({
@@ -24,6 +32,7 @@ export default function AnimatedText({
   mode = "fadeUp",
   delay = 0,
   className = "",
+  charKerning,
 }: AnimatedTextProps) {
   const containerRef = useRef<HTMLElement>(null);
   const ready = usePageReady();
@@ -35,16 +44,52 @@ export default function AnimatedText({
     const el = containerRef.current;
     if (!el) return;
 
-    // Split text into individual char spans
-    const chars = text.split("").map((char) => {
-      const span = document.createElement("span");
-      span.textContent = char === " " ? "\u00A0" : char;
-      span.style.display = "inline-block";
-      return span;
-    });
+    // Split into words, wrap each word in an inline-block container so the
+    // browser only breaks at word boundaries — never mid-word.
+    const chars: HTMLSpanElement[] = [];
 
     el.innerHTML = "";
-    chars.forEach((c) => el.appendChild(c));
+    // fadeUp needs inline-block for y-transforms; all other modes only animate
+    // opacity so inline avoids the sub-pixel gaps and line-height inflation
+    // that inline-block causes when applied char-by-char.
+    const needsBlock = mode === "fadeUp";
+
+    const lines = text.split("\n");
+    lines.forEach((line, li) => {
+      const words = line.split(" ");
+      words.forEach((word, wi) => {
+        const wordSpan = document.createElement("span");
+        wordSpan.style.display = needsBlock ? "inline-block" : "inline";
+        wordSpan.style.whiteSpace = "nowrap";
+
+        word.split("").forEach((char) => {
+          const span = document.createElement("span");
+          span.textContent = char;
+          span.style.display = needsBlock ? "inline-block" : "inline";
+          const idx = chars.length;
+          if (charKerning?.[idx]) {
+            span.style.marginRight = charKerning[idx];
+          }
+          wordSpan.appendChild(span);
+          chars.push(span);
+        });
+
+        el.appendChild(wordSpan);
+
+        // Space between words (except after last)
+        if (wi < words.length - 1) {
+          const space = document.createElement("span");
+          space.textContent = "\u00A0";
+          space.style.display = "inline";
+          el.appendChild(space);
+        }
+      });
+
+      // Hard line break between lines (except after last)
+      if (li < lines.length - 1) {
+        el.appendChild(document.createElement("br"));
+      }
+    });
 
     let tweens: gsap.core.Tween[] = [];
 
@@ -92,6 +137,17 @@ export default function AnimatedText({
         opacity: 1,
         stagger: 0.06,
         duration: 0.001,
+        ease: "none",
+        delay,
+      })];
+    } else if (mode === "scrambleIn") {
+      // Shuffle a copy of the chars array so each appears in random order
+      const shuffled = [...chars].sort(() => Math.random() - 0.5);
+      gsap.set(chars, { opacity: 0 });
+      tweens = [gsap.to(shuffled, {
+        opacity: 1,
+        stagger: 0.08,
+        duration: 0.01,
         ease: "none",
         delay,
       })];

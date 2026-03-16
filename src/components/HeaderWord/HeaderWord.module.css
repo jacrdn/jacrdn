@@ -1,0 +1,39 @@
+.root {
+  position: relative;
+  overflow: hidden;
+  height: 1.2em;
+  font-family: var(--font-sub);
+  font-size: 1rem;
+  letter-spacing: -0.02em;
+}
+
+.word {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  white-space: nowrap;
+  will-change: transform;
+  transform: translateY(100%);
+  color: var(--fg);
+}
+
+.sizer {
+  display: block;
+  height: 0;
+  overflow: hidden;
+  visibility: hidden;
+  white-space: nowrap;
+  pointer-events: none;
+}
+
+.word:first-child {
+  transform: translateY(0);
+}
+
+.word[data-inverted="true"] {
+  background: var(--fg);
+  color: var(--bg);
+  padding: 0 0.3em;
+}

@@ -62,7 +62,6 @@
 }
 
 html {
-  scroll-behavior: smooth;
   font-size: 16px;
 }
 
@@ -88,10 +87,11 @@ a {
 /* ─── Scroll utility (future ScrollTrigger targets) ───────────── */
 .section {
   position: relative;
-  min-height: 100vh;
+  height: 100vh;
   display: flex;
   flex-direction: column;
   justify-content: center;
+  scroll-snap-align: start;
 }
 
 /* ─── GSAP visibility defaults ────────────────────────────────── */

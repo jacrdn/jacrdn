@@ -1,10 +1,15 @@
 import type { Metadata } from "next";
 import "@/styles/globals.css";
+import HeaderWord from "@/components/HeaderWord/HeaderWord";
+import Nav from "@/components/Nav/Nav";
 
 export const metadata: Metadata = {
   title: "9xbetter",
   description: "Personal portfolio — 9xbetter.com",
   metadataBase: new URL("https://9xbetter.com"),
+  icons: {
+    icon: "/favicon.svg",
+  },
 };
 
 export default function RootLayout({
@@ -31,7 +36,13 @@ export default function RootLayout({
           crossOrigin="anonymous"
         />
       </head>
-      <body>{children}</body>
+      <body>
+        <div style={{ position: "fixed", top: "1.5rem", left: "1.5rem", zIndex: 100, display: "flex", alignItems: "flex-end", gap: "2rem" }}>
+          <HeaderWord />
+          <Nav />
+        </div>
+        {children}
+      </body>
     </html>
   );
 }

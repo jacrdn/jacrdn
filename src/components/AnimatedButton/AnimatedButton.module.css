@@ -9,6 +9,7 @@
   font-weight: 600;
   letter-spacing: 0.12em;
   text-transform: uppercase;
+  line-height: 1;
   cursor: pointer;
   overflow: hidden;
   border: none;
@@ -39,6 +40,7 @@
   z-index: 1;
   color: var(--fg);
   transition: color 0.25s var(--ease-fluid);
+  transform: translateY(0.05em); /* compensate for NewEdge666 ascender bias */
 }
 
 /* On hover, label flips to background color so it reads against the red fill */

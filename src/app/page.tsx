@@ -22,10 +22,9 @@ export default function Home() {
             <p className={`gsap-hidden ${styles.bodyText}`}>
               Hey, my name is Jack Cardin. I&apos;m a 24-year-old Software Engineer, Product Designer, and Sound Designer based out of New England, USA. I&apos;m deeply passionate about user experience, design, and safety tailored for the underprivileged and overlooked. I believe in healthcare, security, and agency no matter a person&apos;s ability or economic status. I plan to use bleeding-edge technology to make the world a <span className={styles.slightly}>slightly</span> <span style={{ fontFamily: "var(--font-sub)" }}>better</span> place.
             </p>
+            <p className={styles.likesHeading}>Interests &amp; Passions</p>
             <ul className={`gsap-hidden ${styles.likesList}`}>
-              <li>Agentic engineering</li>
-              <li>Grilling, walks on the beach, Sudoku</li>
-              <li>The music of Sade Adu, Lucki, Veeze, Vallée808, and Abztract</li>
+              <li>Agentic engineering, Grilling, The Beach, Sudoku, Sade</li>
               <li><a href="https://podcasts.apple.com/om/podcast/artificial-idiots-ai/id1824447200" target="_blank" rel="noopener noreferrer" className={styles.link}>The Artificial Idiots Podcast</a> — a podcast where fellow agentic entrepreneurs and power users share thoughts, comments, and concerns regarding agentic AI</li>
             </ul>
           </div>

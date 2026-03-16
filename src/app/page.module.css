@@ -1,6 +1,21 @@
 .main {
   width: 100%;
   overflow-x: hidden;
+  height: 100vh;
+  overflow-y: scroll;
+  scroll-snap-type: y mandatory;
+}
+
+.main::-webkit-scrollbar {
+  width: 4px;
+}
+
+.main::-webkit-scrollbar-track {
+  background: var(--bg);
+}
+
+.main::-webkit-scrollbar-thumb {
+  background: var(--fg);
 }
 
 .sectionTitle {
@@ -15,6 +30,63 @@
   max-width: 60ch;
   line-height: 1.8;
 }
+
+.link {
+  color: var(--fg);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+.slightly {
+  background: var(--fg);
+  color: var(--bg);
+  font-style: italic;
+  font-weight: 700;
+  padding: 0 0.1em;
+}
+
+.aboutLayout {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 4rem;
+  align-items: center;
+}
+
+.aboutText {
+  display: flex;
+  flex-direction: column;
+}
+
+.aboutImage {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+
+@media (max-width: 768px) {
+  .aboutLayout {
+    grid-template-columns: 1fr;
+  }
+  .aboutImage {
+    max-height: 400px;
+  }
+}
+
+.contactLinks {
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+  font-family: var(--font-body);
+  font-size: 1rem;
+  font-weight: 300;
+  color: var(--fg);
+}
+
+.contactLinks a {
+  color: var(--fg);
+  text-decoration: underline;
+}
+
 
 .grid {
   display: grid;

@@ -77,10 +77,10 @@ export default function ThreeDScene() {
       cy    = H / 2;
       baseR = Math.min(W, H) * 0.33;
     }
-    resize();
 
     let animId: number;
     let isVisible = true;
+    let started = false;
     const t0 = performance.now();
     let prevT = 0;
 
@@ -137,7 +137,17 @@ export default function ThreeDScene() {
         ctx!.stroke();
       }
     }
-    draw();
+    function tryStart() {
+      resize();
+      if (!started && W > 0 && H > 0) {
+        started = true;
+        draw();
+      }
+    }
+
+    const ro = new ResizeObserver(tryStart);
+    ro.observe(canvas);
+    tryStart(); // succeeds immediately on Chrome/Firefox; Safari fires via ResizeObserver
 
     const observer = new IntersectionObserver(
       ([entry]) => {
@@ -148,12 +158,10 @@ export default function ThreeDScene() {
     );
     observer.observe(canvas);
 
-    window.addEventListener("resize", resize);
-
     return () => {
       cancelAnimationFrame(animId);
       observer.disconnect();
-      window.removeEventListener("resize", resize);
+      ro.disconnect();
     };
   }, []);
 

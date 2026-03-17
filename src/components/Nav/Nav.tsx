@@ -8,7 +8,7 @@ const sections = [
   { label: "About", id: "about" },
   { label: "Work", id: "work" },
   { label: "Blog", id: "blog" },
-  { label: "Contact", id: "contact" },
+  { label: "Contact", id: "contact", hideMobile: true },
 ];
 
 export default function Nav() {
@@ -25,8 +25,8 @@ export default function Nav() {
     <header className={isHomepage ? styles.headerInline : styles.headerFixed}>
       <nav className={styles.nav}>
         {isHomepage
-          ? sections.map(({ label, id }) => (
-              <button key={id} className={styles.link} onClick={() => scrollTo(id)}>
+          ? sections.map(({ label, id, hideMobile }) => (
+              <button key={id} className={`${styles.link}${hideMobile ? ` ${styles.hideMobile}` : ""}`} onClick={() => scrollTo(id)}>
                 {label}
               </button>
             ))

@@ -16,7 +16,7 @@
     left: 1rem;
   }
 
-  .hideMobile {
+  .nav .hideMobile {
     display: none;
   }
 }

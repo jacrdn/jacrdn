@@ -2,7 +2,7 @@
 import { useEffect, useRef } from "react";
 import styles from "./HeaderWord.module.css";
 
-const WORDS = ["agents", "health", "product", "safety"];
+const WORDS = ["jacrdn", "health", "product", "agents", "safety"];
 
 export default function HeaderWord() {
   const spansRef = useRef<(HTMLSpanElement | null)[]>([]);
@@ -11,7 +11,7 @@ export default function HeaderWord() {
     const scroller = document.querySelector<HTMLElement>("main");
     if (!scroller) return;
 
-    const ids = ["hero", "about", "work", "contact"];
+    const ids = ["hero", "about", "work", "blog", "contact"];
 
     const update = () => {
       const snaps = ids.map((id) => document.getElementById(id)?.offsetTop ?? 0);

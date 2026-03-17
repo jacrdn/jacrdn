@@ -65,6 +65,12 @@ src/
     globals.css       — design tokens, reset, font-face declarations
 ```
 
+## HeaderWord ("the scroller")
+
+`src/components/HeaderWord/` — the word mark in the top-left corner. Jack calls it **"the scroller"** because it cycles through words ("agents", "health", "product", "safety") driven by `main`'s `scrollTop`. It uses each section's `offsetTop` to compute animation progress.
+
+**Critical:** Never change section heights (`height: 100dvh`) on mobile — doing so shifts `offsetTop` values and breaks the HeaderWord animation timing.
+
 ## Sections (page.tsx)
 
 | Section | Status |
@@ -73,6 +79,10 @@ src/
 | About | Placeholder — bio copy needed |
 | Work | Placeholder — project cards (currently "Project A/B/C") |
 | Contact | Placeholder — contact info needed |
+
+## Collaboration Style
+
+- When something is ambiguous or unclear, **always ask rather than guess**. Jack prefers a quick clarifying question over multiple wrong attempts — it saves time and context.
 
 ## Key Conventions
 

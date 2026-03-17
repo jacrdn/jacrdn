@@ -104,10 +104,12 @@
   .main {
     height: 100dvh;
     scroll-snap-type: none;
+    padding-bottom: calc(3.5rem + env(safe-area-inset-bottom));
   }
 
   .header {
-    top: 1rem;
+    top: auto;
+    bottom: calc(1rem + env(safe-area-inset-bottom));
     left: 1rem;
     gap: 1.25rem;
   }

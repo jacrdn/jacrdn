@@ -1,5 +1,20 @@
-.header {
+.headerInline {
   display: contents;
+}
+
+.headerFixed {
+  position: fixed;
+  top: 1.5rem;
+  left: 1.5rem;
+  z-index: 100;
+}
+
+@media (max-width: 768px) {
+  .headerFixed {
+    top: auto;
+    bottom: calc(1rem + env(safe-area-inset-bottom));
+    left: 1rem;
+  }
 }
 
 .nav {
@@ -10,6 +25,7 @@
 }
 
 .link {
+  display: inline-block;
   background: none;
   border: none;
   cursor: pointer;
@@ -21,6 +37,7 @@
   text-transform: uppercase;
   letter-spacing: 0.08em;
   padding: 0 0.3em;
+  text-decoration: none;
   transition: background 0.15s var(--ease-fluid), color 0.15s var(--ease-fluid), font-style 0s;
 }
 
@@ -29,4 +46,3 @@
   color: var(--bg);
   font-style: italic;
 }
-

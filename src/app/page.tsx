@@ -4,9 +4,12 @@ import Section from "@/components/Section/Section";
 import WorkCarousel from "@/components/WorkCarousel/WorkCarousel";
 import HeaderWord from "@/components/HeaderWord/HeaderWord";
 import Nav from "@/components/Nav/Nav";
+import BlogPreview from "@/components/BlogPreview/BlogPreview";
+import { getAllPosts } from "@/lib/blog";
 import styles from "./page.module.css";
 
 export default function Home() {
+  const recentPosts = getAllPosts().slice(0, 4);
   return (
     <main className={styles.main}>
       <div className={styles.header}>
@@ -43,6 +46,11 @@ export default function Home() {
       <Section id="work">
         <h2 className={styles.sectionTitle}>Work</h2>
         <WorkCarousel />
+      </Section>
+
+      <Section id="blog" scrollAnimate>
+        <h2 className={styles.sectionTitle}>Blog</h2>
+        <BlogPreview posts={recentPosts} />
       </Section>
 
       <Section id="contact" scrollAnimate>

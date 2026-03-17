@@ -1,0 +1,122 @@
+.root {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+}
+
+.featured {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  padding-bottom: 1.5rem;
+  border-bottom: 1px solid var(--fg-muted);
+}
+
+.featuredDate {
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--fg);
+}
+
+.featuredTitle {
+  font-family: var(--font-display);
+  font-size: clamp(1.5rem, 3vw, 2.2rem);
+  line-height: 1.1;
+  font-weight: 400;
+}
+
+.featuredTitle a {
+  font-family: var(--font-display);
+  color: var(--fg);
+  text-decoration: none;
+  transition: background 0.15s var(--ease-fluid), color 0.15s var(--ease-fluid);
+  padding: 0 0.05em;
+}
+
+.featuredTitle a:hover {
+  background: var(--fg);
+  color: var(--bg);
+}
+
+.featuredExcerpt {
+  font-weight: 400;
+  line-height: 1.8;
+  max-width: 52ch;
+  color: var(--fg);
+}
+
+.readLink {
+  align-self: flex-start;
+  font-size: 0.85rem;
+  font-weight: 600;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  color: var(--fg);
+  text-decoration: none;
+  padding: 0.25em 0.5em;
+  border: 1.5px solid var(--fg);
+  transition: background 0.15s var(--ease-fluid), color 0.15s var(--ease-fluid);
+}
+
+.readLink:hover {
+  background: var(--fg);
+  color: var(--bg);
+}
+
+.moreList {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+  padding: 0;
+}
+
+.moreItem {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 1rem;
+  border-bottom: 1px solid var(--fg-muted);
+  padding-bottom: 0.5rem;
+}
+
+.moreLink {
+  font-size: 0.9rem;
+  color: var(--fg);
+  text-decoration: none;
+  padding: 0 0.1em;
+  transition: background 0.15s var(--ease-fluid), color 0.15s var(--ease-fluid);
+}
+
+.moreLink:hover {
+  background: var(--fg);
+  color: var(--bg);
+}
+
+.moreDate {
+  font-size: 0.75rem;
+  color: var(--fg);
+  white-space: nowrap;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+}
+
+.seeAll {
+  align-self: flex-start;
+  font-size: 0.8rem;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--fg);
+  text-decoration: none;
+  padding: 0.35em 0.7em;
+  border: 1.5px solid var(--fg);
+  transition: background 0.15s var(--ease-fluid), color 0.15s var(--ease-fluid);
+}
+
+.seeAll:hover {
+  background: var(--fg);
+  color: var(--bg);
+}

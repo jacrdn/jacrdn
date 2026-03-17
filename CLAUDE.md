@@ -84,6 +84,10 @@ src/
 
 - When something is ambiguous or unclear, **always ask rather than guess**. Jack prefers a quick clarifying question over multiple wrong attempts — it saves time and context.
 
+## UI Copy Conventions
+
+- **No arrows in button/link text** — omit `→`, `←`, and similar directional glyphs from all labels, nav links, and CTAs. Let the typography and layout carry directionality; the glyphs read as noise against NewEdge666.
+
 ## Key Conventions
 
 - Always use CSS variables for color (`var(--fg)`, `var(--bg)`) — never hardcode hex in components

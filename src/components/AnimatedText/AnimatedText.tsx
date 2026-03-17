@@ -100,6 +100,9 @@ export default function AnimatedText({
         duration: 0.5,
         ease: "fluid",
         delay,
+        onComplete() {
+          if (el) el.innerHTML = text;
+        },
       })];
     } else if (mode === "glitch") {
       const glitchChars = "!@#$%^&*[]{}|<>";

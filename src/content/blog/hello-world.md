@@ -26,5 +26,4 @@ Posts here will cover:
 
 Some posts will include downloadable skill files you can drop straight into Claude Code.
 
-With attention to detail.
-- Jack
+With intent, Jack

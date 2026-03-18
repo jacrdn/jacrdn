@@ -76,11 +76,13 @@ export default function ThreeDScene() {
       cx    = W / 2;
       cy    = H / 2;
       baseR = Math.min(W, H) * 0.33;
+      activeCount = Math.max(12, Math.round(RING_COUNT * Math.min(1, baseR / 200)));
     }
 
     let animId: number;
     let isVisible = true;
     let started = false;
+    let activeCount = RING_COUNT;
     const t0 = performance.now();
     let prevT = 0;
 
@@ -96,7 +98,7 @@ export default function ThreeDScene() {
       ctx!.strokeStyle = "#ea032e";
       ctx!.globalAlpha = 1;
 
-      for (const ring of rings) {
+      for (const ring of rings.slice(0, activeCount)) {
         const total   = ring.easeTime * 2 + ring.segDuration;
         const elapsed = t - ring.segStart;
 

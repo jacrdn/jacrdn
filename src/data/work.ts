@@ -17,8 +17,8 @@ export const workItems: WorkItem[] = [
     bio: "",
     responsibilities: [
       "Sole QA engineer — owned E2E platform testing and all release management across 8 microservices and 3 production environments.",
-      "Built a 5-wave, 13-intent agentic smoke test pipeline reducing full regression from 2 hours to 5 minutes.",
-      "Built parallel multi-agent investigation teams compressing bug triage from 30–45 minutes to under 2 minutes.",
+      "Built a 5-wave, 13-intent agentic smoke test pipeline reducing full regression from 2 hours to 20 minutes.",
+      "Built parallel multi-agent investigation teams compressing average bug triage per report from 30–45 minutes to under 2 minutes.",
     ],
     tags: ["Python", "GCP/GKE", "Claude Code", "LiveKit", "Intent-Based Testing", "Domain-Driven Design", "MD as Software", "pytest"],
   },

@@ -8,6 +8,7 @@ export default function WorkCarousel() {
   const total = workItems.length;
   const rootRef = useRef<HTMLDivElement>(null);
   const hovered = useRef(false);
+  const snapTimeout = useRef<ReturnType<typeof setTimeout>>();
 
   useEffect(() => {
     const el = rootRef.current;
@@ -19,25 +20,33 @@ export default function WorkCarousel() {
     const onWheel = (e: WheelEvent) => {
       if (!hovered.current) return;
 
-      const atStart = el.scrollLeft === 0;
+      const atStart = el.scrollLeft <= 0;
       const atEnd = el.scrollLeft >= el.scrollWidth - el.clientWidth - 1;
 
       // At limits, let page scroll naturally
       if ((atStart && e.deltaY < 0) || (atEnd && e.deltaY > 0)) return;
 
       e.preventDefault();
+
+      // Disable snap while scrolling — re-enable after gesture ends (triggers snap-to-card)
+      el.style.scrollSnapType = "none";
       el.scrollLeft += e.deltaY;
+
+      clearTimeout(snapTimeout.current);
+      snapTimeout.current = setTimeout(() => {
+        el.style.scrollSnapType = "";
+      }, 150);
     };
 
     el.addEventListener("mouseenter", onEnter);
     el.addEventListener("mouseleave", onLeave);
-    // Document-level listener ensures preventDefault fires before any passive parent handler
-    document.addEventListener("wheel", onWheel, { passive: false });
+    el.addEventListener("wheel", onWheel, { passive: false });
 
     return () => {
       el.removeEventListener("mouseenter", onEnter);
       el.removeEventListener("mouseleave", onLeave);
-      document.removeEventListener("wheel", onWheel);
+      el.removeEventListener("wheel", onWheel);
+      clearTimeout(snapTimeout.current);
     };
   }, []);
 

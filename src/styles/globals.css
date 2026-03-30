@@ -65,6 +65,11 @@ html {
   font-size: 16px;
 }
 
+::selection {
+  background-color: var(--fg);
+  color: var(--bg);
+}
+
 body {
   background-color: var(--bg);
   color: var(--fg);

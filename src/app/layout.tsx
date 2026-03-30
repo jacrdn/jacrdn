@@ -34,6 +34,13 @@ export default function RootLayout({
         />
         <link
           rel="preload"
+          href="/fonts/Glasset-Demo.ttf"
+          as="font"
+          type="font/ttf"
+          crossOrigin="anonymous"
+        />
+        <link
+          rel="preload"
           href="/fonts/NewEdge666-Regular.otf"
           as="font"
           type="font/otf"

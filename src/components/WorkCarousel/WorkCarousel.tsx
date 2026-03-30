@@ -1,58 +1,14 @@
 "use client";
 
-import { useEffect, useRef } from "react";
 import { workItems } from "@/data/work";
 import styles from "./WorkCarousel.module.css";
 
 export default function WorkCarousel() {
   const total = workItems.length;
-  const rootRef = useRef<HTMLDivElement>(null);
-  const hovered = useRef(false);
-  const snapTimeout = useRef<ReturnType<typeof setTimeout>>();
-
-  useEffect(() => {
-    const el = rootRef.current;
-    if (!el) return;
-
-    const onEnter = () => { hovered.current = true; };
-    const onLeave = () => { hovered.current = false; };
-
-    const onWheel = (e: WheelEvent) => {
-      if (!hovered.current) return;
-
-      const atStart = el.scrollLeft <= 0;
-      const atEnd = el.scrollLeft >= el.scrollWidth - el.clientWidth - 1;
-
-      // At limits, let page scroll naturally
-      if ((atStart && e.deltaY < 0) || (atEnd && e.deltaY > 0)) return;
-
-      e.preventDefault();
-
-      // Disable snap while scrolling — re-enable after gesture ends (triggers snap-to-card)
-      el.style.scrollSnapType = "none";
-      el.scrollLeft += e.deltaY;
-
-      clearTimeout(snapTimeout.current);
-      snapTimeout.current = setTimeout(() => {
-        el.style.scrollSnapType = "";
-      }, 150);
-    };
-
-    el.addEventListener("mouseenter", onEnter);
-    el.addEventListener("mouseleave", onLeave);
-    el.addEventListener("wheel", onWheel, { passive: false });
-
-    return () => {
-      el.removeEventListener("mouseenter", onEnter);
-      el.removeEventListener("mouseleave", onLeave);
-      el.removeEventListener("wheel", onWheel);
-      clearTimeout(snapTimeout.current);
-    };
-  }, []);
 
   return (
     <div className={styles.outer}>
-    <div className={styles.root} ref={rootRef}>
+    <div className={styles.root}>
       <div className={styles.track}>
         <div className={styles.spacer} aria-hidden />
         {workItems.map((item) => (

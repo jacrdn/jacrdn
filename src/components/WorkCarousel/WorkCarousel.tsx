@@ -31,12 +31,13 @@ export default function WorkCarousel() {
 
     el.addEventListener("mouseenter", onEnter);
     el.addEventListener("mouseleave", onLeave);
-    el.addEventListener("wheel", onWheel, { passive: false });
+    // Document-level listener ensures preventDefault fires before any passive parent handler
+    document.addEventListener("wheel", onWheel, { passive: false });
 
     return () => {
       el.removeEventListener("mouseenter", onEnter);
       el.removeEventListener("mouseleave", onLeave);
-      el.removeEventListener("wheel", onWheel);
+      document.removeEventListener("wheel", onWheel);
     };
   }, []);
 

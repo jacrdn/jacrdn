@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useRef } from "react";
+import { useLayoutEffect, useRef } from "react";
 import { gsap } from "@/lib/gsap";
 import { usePageReady } from "@/lib/usePageReady";
 import styles from "./AnimatedText.module.css";
@@ -37,7 +37,7 @@ export default function AnimatedText({
   const containerRef = useRef<HTMLElement>(null);
   const ready = usePageReady();
 
-  useEffect(() => {
+  useLayoutEffect(() => {
     // Do nothing until fonts are loaded and layout has settled
     if (!ready) return;
 
@@ -161,7 +161,11 @@ export default function AnimatedText({
   }, [ready, text, mode, delay]);
 
   return (
-    <Tag ref={containerRef as React.RefObject<never>} className={`${styles.root} ${className}`}>
+    <Tag
+      ref={containerRef as React.RefObject<never>}
+      className={`${styles.root} ${className}`}
+      style={!ready ? { opacity: 0 } : undefined}
+    >
       {text}
     </Tag>
   );

@@ -56,7 +56,6 @@ export default function Home() {
       <Section id="contact" scrollAnimate>
         <h2 className={styles.sectionTitle}>Contact</h2>
         <div className={styles.contactLinks}>
-          <span>instagram: <a href="https://instagram.com/jacrdn" target="_blank" rel="noopener noreferrer">instagram.com/jacrdn</a></span>
           <span>linkedin: <a href="https://www.linkedin.com/in/jackrcardin/" target="_blank" rel="noopener noreferrer">linkedin.com/in/jackrcardin/</a></span>
           <span>email: <a href="mailto:jackrcardin@gmail.com">jackrcardin@gmail.com</a></span>
           <a href="/nowhere" className={styles.pigeon}>(via carrier pigeon, or MCP)</a>

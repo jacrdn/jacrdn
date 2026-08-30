@@ -1,0 +1,131 @@
+.main {
+  min-height: 100vh;
+  background: var(--bg);
+  padding: 4rem 2rem 6rem;
+}
+
+.policy {
+  width: min(100%, 820px);
+  margin: 0 auto;
+}
+
+.header {
+  padding-bottom: 3rem;
+  margin-bottom: 3rem;
+  border-bottom: 1px solid var(--fg-muted);
+}
+
+.homeLink {
+  display: inline-block;
+  margin-bottom: 4rem;
+  padding: 0.3em 0.6em;
+  border: 1.5px solid var(--fg);
+  color: var(--fg);
+  font-size: 0.8rem;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  transition:
+    background 0.15s var(--ease-fluid),
+    color 0.15s var(--ease-fluid);
+}
+
+.homeLink:hover,
+.homeLink:focus-visible {
+  background: var(--fg);
+  color: var(--bg);
+}
+
+.product {
+  margin-bottom: 0.5rem;
+  font-size: 0.85rem;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.heading {
+  font-family: var(--font-sub);
+  font-size: clamp(3.5rem, 10vw, 7rem);
+  font-weight: 400;
+  line-height: 0.95;
+}
+
+.effective {
+  margin-top: 1.5rem;
+  color: var(--fg-muted);
+  font-size: 0.85rem;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+.policy section {
+  padding: 2rem 0;
+  border-bottom: 1px solid var(--fg-muted);
+}
+
+.policy h2 {
+  margin-bottom: 1rem;
+  color: var(--fg);
+  font-family: var(--font-sub);
+  font-size: clamp(1.65rem, 4vw, 2.2rem);
+  line-height: 1.15;
+}
+
+.policy p,
+.policy li {
+  max-width: 72ch;
+  font-size: 0.95rem;
+  font-weight: 300;
+  line-height: 1.75;
+}
+
+.policy p + p {
+  margin-top: 1rem;
+}
+
+.policy ul {
+  margin-top: 0.75rem;
+  padding-left: 1.25rem;
+}
+
+.policy li + li {
+  margin-top: 0.5rem;
+}
+
+.policy a:not(.homeLink) {
+  border-bottom: 1px solid currentColor;
+  font-weight: 600;
+}
+
+.policy a:not(.homeLink):hover,
+.policy a:not(.homeLink):focus-visible {
+  background: var(--fg);
+  color: var(--bg);
+}
+
+@media (max-width: 768px) {
+  .main {
+    padding: 2rem 1.25rem 4rem;
+  }
+
+  .header {
+    padding-bottom: 2rem;
+    margin-bottom: 1.5rem;
+  }
+
+  .homeLink {
+    margin-bottom: 3rem;
+  }
+
+  .policy section {
+    padding: 1.5rem 0;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .homeLink {
+    transition: none;
+  }
+}
